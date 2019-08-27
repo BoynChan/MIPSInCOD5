@@ -6,6 +6,11 @@
 # which means if registerA equals registerB , it will jump to the address of branch
 # (if not)  bne(branch not equal) registerA,registerB,branch
 # which is opposite with bqe sentence
+# and there has slt command
+# slt(set on less than)  $t0, $t3, $t4  # $t0=1 if $s3 < $s4  else $t0 = 0
+# slti  $t0, $t3, immidiate
+
+# we can use beq, bnq, slt, slti to make all compare
     .data
 g:  .word 0x4
 h:  .word 0x4
