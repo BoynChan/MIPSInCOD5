@@ -10,14 +10,14 @@
 # }
 
 # $a0 = *v, $a1 = n
-# $s1 = i, $s2 = j
+# $s0 = i, $s1 = j
     .data
-v:  .word 0x4 0x3 0x2 0x1
+v:  .word 0x4 0x3 0x1 0x5 0x2 0x6
     .text
     .globl main
 main:
     la      $a0,v
-    li      $a1,4
+    li      $a1,6
     addi    $sp, $sp, -20
     sw      $ra, 16($sp)
     sw      $s3, 12($sp)
@@ -36,10 +36,10 @@ for2tst: # the second layer loop
     slti    $t0, $s1, 0         # whether j >= 0 ?
     bne     $t0, $0, exit2
     sll     $t1, $s1, 2
-    add     $t1, $a2, $t1
+    add     $t1, $a0, $t1
     lw      $t2, 0($t1)         # $t2 = v[j]
     lw      $t3, 4($t1)         # $t3 = v[j+1]
-    slt     $t0, $t4, $t3       # $t0 = 0 if t4 >= t3  -->  t3 > t4
+    slt     $t0, $t3, $t2       # $t0 = 0 if t3 >= t2  -->  t2 > t3
     beq     $t0, $0, exit2
 
     move    $a0, $s2            # the address of v
@@ -51,7 +51,7 @@ for2tst: # the second layer loop
     # the second layer loop end
 exit2:
     addi    $s0, $s0, 1         # i+=1
-    j       for1tst
+    j       for1tst             #jump to the first layer loop
     # the first layer loop end
 exit1:
     lw      $ra, 16($sp)
